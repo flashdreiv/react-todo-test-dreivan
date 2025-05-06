@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 
 export function ClunkyTodoList() {
+
   const [tasks, setTasks] = useState([
     { id: 1, text: "Learn React", completed: false },
     { id: 2, text: "Write code", completed: true },
@@ -36,6 +37,7 @@ export function ClunkyTodoList() {
   };
 
   const [tasksToRender, setTasksToRender] = useState<any[]>([])
+
   useEffect(() => {
     let filteredTasks = tasks;
     if (filter === "completed") {
@@ -44,11 +46,11 @@ export function ClunkyTodoList() {
       filteredTasks = tasks.filter((task) => !task.completed);
     }
     setTasksToRender(filteredTasks);
-  }, [tasks]);
+  }, [tasks, filter]);
 
   const totalCount = useMemo(() => {
     return tasks.length;
-  }, []);
+  }, [tasks]);
 
   return (
     <div>
