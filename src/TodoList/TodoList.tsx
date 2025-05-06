@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { Task } from "../types";
 import { TaskItem } from "./TaskItem";
 import { TaskFilters } from "./TaskFilters";
@@ -50,8 +50,7 @@ export function TodoList() {
                 (filter === "active" && !task.completed) ||
                 (filter === "completed" && task.completed);
 
-            // Return true if it matches the filter and (if multiWordOnly is enabled) has multiple words
-            return matchesFilter && (!multiWordOnly || isMultiWord);
+            return matchesFilter && (filter === "all" || !multiWordOnly || isMultiWord);
         });
     }, [tasks, filter, multiWordOnly]);
 
