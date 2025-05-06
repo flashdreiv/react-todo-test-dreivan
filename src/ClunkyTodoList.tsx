@@ -36,16 +36,10 @@ export function ClunkyTodoList() {
     setTasks(updatedTasks);
   };
 
-  const [tasksToRender, setTasksToRender] = useState<any[]>([])
-
-  useEffect(() => {
-    let filteredTasks = tasks;
-    if (filter === "completed") {
-      filteredTasks = tasks.filter((task) => task.completed);
-    } else if (filter === "active") {
-      filteredTasks = tasks.filter((task) => !task.completed);
-    }
-    setTasksToRender(filteredTasks);
+  const tasksToRender = useMemo(() => {
+    if (filter === "completed") return tasks.filter((task) => task.completed);
+    if (filter === "active") return tasks.filter((task) => !task.completed);
+    return tasks;
   }, [tasks, filter]);
 
   const totalCount = useMemo(() => {
