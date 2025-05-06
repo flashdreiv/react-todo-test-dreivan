@@ -9,6 +9,7 @@ export function ClunkyTodoList() {
   const [newTask, setNewTask] = useState("");
   const [filter, setFilter] = useState("all");
 
+
   const handleInputChange = (event) => {
     setNewTask(event.target.value);
   };
