@@ -10,6 +10,8 @@ export function ClunkyTodoList() {
   const [newTask, setNewTask] = useState("");
   const [filter, setFilter] = useState("all");
 
+  const [multiWordOnly, setMultiWordOnly] = useState(false);
+
 
   const handleInputChange = (event) => {
     setNewTask(event.target.value);
@@ -47,10 +49,21 @@ export function ClunkyTodoList() {
   };
 
   const tasksToRender = useMemo(() => {
-    if (filter === "completed") return tasks.filter((task) => task.completed);
-    if (filter === "active") return tasks.filter((task) => !task.completed);
-    return tasks;
-  }, [tasks, filter]);
+    let filtered = tasks;
+
+    if (filter === "completed") {
+      filtered = filtered.filter(task => task.completed);
+    } else if (filter === "active") {
+      filtered = filtered.filter(task => !task.completed);
+    }
+
+    if (multiWordOnly) {
+      filtered = filtered.filter(task => task.text.trim().split(/\s+/).length >= 2);
+    }
+
+    return filtered;
+  }, [tasks, filter, multiWordOnly]);
+
 
   const totalCount = useMemo(() => {
     return tasks.length;
@@ -72,6 +85,9 @@ export function ClunkyTodoList() {
         <button onClick={() => setFilter("all")}>All</button>
         <button onClick={() => setFilter("active")}>Active</button>
         <button onClick={() => setFilter("completed")}>Completed</button>
+        <button onClick={() => setMultiWordOnly(prev => !prev)}>
+          {multiWordOnly ? "All lengths" : "Multiword"}
+        </button>
         <button onClick={handleClearCompleted}>Clear all completed tasks</button>
       </div>
       <ul>
