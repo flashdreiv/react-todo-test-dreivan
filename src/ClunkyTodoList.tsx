@@ -36,6 +36,11 @@ export function ClunkyTodoList() {
     setTasks(updatedTasks);
   };
 
+  const handleRemoveTask = (id) => {
+    const updatedTasks = tasks.filter((task) => task.id !== id);
+    setTasks(updatedTasks);
+  };
+
   const tasksToRender = useMemo(() => {
     if (filter === "completed") return tasks.filter((task) => task.completed);
     if (filter === "active") return tasks.filter((task) => !task.completed);
@@ -57,6 +62,7 @@ export function ClunkyTodoList() {
         placeholder="Add new task"
       />
       <button onClick={handleAddTask}>Add</button>
+
       <div>
         <button onClick={() => setFilter("all")}>All</button>
         <button onClick={() => setFilter("active")}>Active</button>
@@ -64,7 +70,7 @@ export function ClunkyTodoList() {
       </div>
       <ul>
         {tasksToRender.map((task, index) => (
-          <li key={index}>
+          <li key={index} style={{ display: "flex", alignItems: "center" }}>
             <input
               type="checkbox"
               checked={task.completed}
@@ -75,8 +81,21 @@ export function ClunkyTodoList() {
                 textDecoration: task.completed ? "line-through" : "none",
               }}
             >
-              {task.text}
+
             </span>
+            {task.text}
+            <a
+              onClick={() => handleRemoveTask(task.id)}
+              style={{
+                cursor: "pointer",
+                fontSize: "20px",
+                color: "red",
+                marginLeft: "10px",
+                textDecoration: "none",
+              }}
+            >
+              ×
+            </a>
           </li>
         ))}
       </ul>
