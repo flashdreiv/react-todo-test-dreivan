@@ -42,12 +42,15 @@ export function TodoList() {
 
     const filteredTasks = useMemo(() => {
         return tasks.filter((task) => {
+            // Check if the task text contains two or more words
             const isMultiWord = task.text.trim().split(/\s+/).length >= 2;
+
             const matchesFilter =
                 filter === "all" ||
                 (filter === "active" && !task.completed) ||
                 (filter === "completed" && task.completed);
 
+            // Return true if it matches the filter and (if multiWordOnly is enabled) has multiple words
             return matchesFilter && (!multiWordOnly || isMultiWord);
         });
     }, [tasks, filter, multiWordOnly]);
@@ -72,6 +75,8 @@ export function TodoList() {
             <TaskFilters
                 filter={filter}
                 setFilter={(f) => {
+                    // Reset multiWordOnly when filter is set to "all"
+                    // This ensures that the multiWordOnly filter is only applied when the user selects a specific filter
                     if (f === "all") setMultiWordOnly(false);
                     setFilter(f);
                 }}

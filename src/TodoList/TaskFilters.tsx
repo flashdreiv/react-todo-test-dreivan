@@ -25,6 +25,7 @@ export function TaskFilters({
 
     return (
         <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginBottom: "20px" }}>
+            {/* Add different filter button */}
             {["all", "active", "completed"].map((f) => (
                 <button key={f} onClick={() => setFilter(f)} style={buttonStyle(f === filter)}>
                     {f[0].toUpperCase() + f.slice(1)}

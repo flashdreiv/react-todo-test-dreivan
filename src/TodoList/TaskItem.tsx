@@ -34,7 +34,7 @@ export function TaskItem({
             >
                 {task.text}
             </span>
-            <button
+            <a
                 onClick={() => onRemove(task.id)}
                 style={{
                     background: "none",
@@ -46,7 +46,7 @@ export function TaskItem({
                 aria-label="Remove task"
             >
                 ×
-            </button>
+            </a>
         </li>
     );
 }
